@@ -467,6 +467,12 @@ Comma-separated list of acceptable authentication methods. Use '!' prefix to rej
 Supported methods: `password`, `md5`, `gss`, `sspi`, `scram-sha-256`, `none`. Cannot mix positive and negative options.
 Examples: `requireAuth=md5,scram-sha-256` (allow only MD5 or SCRAM-SHA-256), `requireAuth=!password,!none` (reject cleartext and trust authentication).
 
+* **`scramMaxIterations (`*int*`)`** *Default `100000`*\
+Maximum PBKDF2 iteration count that pgjdbc will accept from the server during SCRAM authentication.
+During SCRAM-SHA-256 authentication, the server sends the iteration count used to derive the salted password. If the server advertises a value higher than `scramMaxIterations`, the driver rejects authentication before starting the PBKDF2 computation.
+This limits client CPU exposure if a malicious or compromised server sends an excessively large iteration count.
+A value of zero disables this check.
+
 ### Unix sockets
 
 By adding junixsocket you can obtain a socket factory that works with the driver.
