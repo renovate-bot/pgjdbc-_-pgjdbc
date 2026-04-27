@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import org.postgresql.PGProperty;
 import org.postgresql.core.ServerVersion;
 import org.postgresql.test.TestUtil;
+import org.postgresql.test.annotations.EnabledForServerVersionRange;
 import org.postgresql.util.PSQLException;
 import org.postgresql.util.PSQLState;
 
@@ -179,6 +180,7 @@ class ScramTest {
   }
 
   @Test
+  @EnabledForServerVersionRange(gte = "16")
   void acceptsValidCredentialsBelowCustomCap() throws SQLException {
     int serverScramIterations = Integer.parseInt(TestUtil.queryForString(con, "SHOW scram_iterations"));
     String password = "t0pSecret";
