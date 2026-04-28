@@ -38,6 +38,12 @@ afterEvaluate {
         publications {
             named<MavenPublication>(project.name) {
                 from(components["shadow"])
+
+                artifact(tasks.named<Jar>("sourcesJar"))
+
+                if (!buildParameters.skipJavadoc) {
+                    artifact(tasks.named<Jar>("javadocJar"))
+                }
             }
         }
     }
